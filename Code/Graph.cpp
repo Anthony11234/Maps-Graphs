@@ -183,6 +183,7 @@ vector<GraphVertex*> Graph::searchBFS(int start) {
                 }
             }
         }
+    }
     return returnVector;
 }//searchBFS
 
