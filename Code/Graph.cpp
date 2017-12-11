@@ -183,25 +183,6 @@ vector<GraphVertex*> Graph::searchBFS(int start) {
                 }
             }
         }
-    }
-
-    tempQueue.push(edgeArray[start].first);
-
-
-
-
-    /*
-     Create a Queue<Node> of nodes to visit;
-     Add v to the Queue;
-     while (The stack is not empty) {
-     Pop a node from the stack, let it be u;
-     if (u has been visited) continue;
-     Add u to the visited set;
-     for (Node w connected to u)
-     Push w onto the stack;
-     }
-     */
-
     return returnVector;
 }//searchBFS
 
