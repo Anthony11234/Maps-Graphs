@@ -1,4 +1,4 @@
-//
+
 //  Graph.cpp
 //  STL_DirGraph
 //
@@ -7,6 +7,7 @@
 //
 #include <stack>
 #include "Graph.hpp"
+#include <iostream>
 
 Graph::Graph() {
     initGraph();
@@ -114,37 +115,35 @@ void Graph::addEdgeUnDir(int source, int destination) {
 //an empty vector
 vector<GraphVertex*> Graph::searchDFS(int start) {
     vector<GraphVertex*> returnVector;
-    stack <int> nodes;
-    bool visited = false;
+    stack <GraphVertex*> tempStack;
+    vector <GraphVertex*> *temp;
+    GraphVertex *ptr;
 
-    nodes.push(start);
+    if(start > STARTSIZE || start < 0 || edgeArray[start].first == nullptr){
+        cout << "No Position at Pounter " << start << endl;
+        return returnVector;
+    }
+    else{
+        clearAllVisited();
 
-    while(!nodes.empty()){
+        tempStack.push(edgeArray[start].first);
 
-      start = nodes.top();
-      nodes.pop();
+        while(!tempStack.empty()){
+            ptr = tempStack.top();
+            tempStack.pop();
+            if (!edgeArray[ptr->Value].first->Visited){
+                returnVector.push_back(edgeArray[ptr->Value].first);
+                edgeArray[ptr->Value].first->Visited = true;
+            }
+            temp = getDestVertex(ptr->Value);
+            for (int i = 0; i < temp->size(); i++) {
+                if (!edgeArray[temp->at(i)->Value].first->Visited) {
+                    tempStack.push(temp->at(i));
+                }
+            }
+        }
+    }
 
-      visited = true;
-
-      if(!visited){
-	       visited = true;
-      }
-      vector<int>::iterator it = edgeArray[STARTSIZE].begin();
-
-
-  }
-
-    /*
-     Create a Stack<Node> of nodes to visit;
-     Add v to the stack;
-     while (The stack is not empty) {
-     Pop a node from the stack, let it be u;
-     if (u has been visited) continue;
-     Add u to the visited set;
-     for (Node w connected to u)
-     Push w onto the stack;
-     }
-     */
 
     return returnVector;
 }//searchDFS
@@ -155,19 +154,36 @@ vector<GraphVertex*> Graph::searchDFS(int start) {
 //an empty vector
 vector<GraphVertex*> Graph::searchBFS(int start) {
     vector<GraphVertex*> returnVector;
+    queue<GraphVertex*> tempQueue;
+    vector<GraphVertex*> *temp;
+    GraphVertex* ptr;
 
-    /*
-     Create a Queue<Node> of nodes to visit;
-     Add v to the stack;
-     while (The stack is not empty) {
-     Pop a node from the stack, let it be u;
-     if (u has been visited) continue;
-     Add u to the visited set;
-     for (Node w connected to u)
-     Push w onto the stack;
-     }
-     */
+    tempQueue.push(edgeArray[start].first);
 
+    if(start > STARTSIZE || start < 0 || edgeArray[start].first == nullptr){
+        cout << "No Position at Pounter " << start << endl;
+        return returnVector;
+    }
+    else{
+        clearAllVisited();
+
+        tempQueue.push(edgeArray[start].first);
+
+        while(!tempQueue.empty()){
+            ptr = tempQueue.front();
+            tempQueue.pop();
+            if (!edgeArray[ptr->Value].first->Visited){
+                returnVector.push_back(edgeArray[ptr->Value].first);
+                edgeArray[ptr->Value].first->Visited = true;
+            }
+            temp = getDestVertex(ptr->Value);
+            for (int i = 0; i < temp->size(); i++) {
+                if (!edgeArray[temp->at(i)->Value].first->Visited) {
+                    tempQueue.push(temp->at(i));
+                }
+            }
+        }
+    }  
     return returnVector;
 }//searchBFS
 
