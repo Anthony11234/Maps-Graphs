@@ -103,6 +103,7 @@ int main(int argc, const char * argv[]) {
     aVertex.clear();
 
     delete myGraph;
+    
 
     std::cout << "Program ending, have a great day!" << endl;
     return 0;
@@ -119,3 +120,4 @@ void printGraph(Graph* theGraph) {
         else {}
     }//for
 }//printGraph
+\
