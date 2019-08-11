@@ -18,22 +18,22 @@ int main(int argc, const char * argv[]) {
     int k = 0;
 
     //Graph Example #1
-    myGraph->addVertex(1);
-    myGraph->addVertex(2);
-    myGraph->addVertex(3);
-    myGraph->addVertex(4);
-    myGraph->addVertex(5);
-    myGraph->addVertex(6);
-    myGraph->addVertex(7);
-    myGraph->addVertex(8);
+    // myGraph->addVertex(1);
+    // myGraph->addVertex(2);
+    // myGraph->addVertex(3);
+    // myGraph->addVertex(4);
+    // myGraph->addVertex(5);
+    // myGraph->addVertex(6);
+    // myGraph->addVertex(7);
+    // myGraph->addVertex(8);
 
-    myGraph->addEdgeUnDir(1, 3);
-    myGraph->addEdgeUnDir(1, 2);
-    myGraph->addEdgeUnDir(2, 4);
-    myGraph->addEdgeUnDir(2, 5);
-    myGraph->addEdgeUnDir(2, 6);
-    myGraph->addEdgeUnDir(3, 7);
-    myGraph->addEdgeUnDir(3, 8);
+    // myGraph->addEdgeUnDir(1, 3);
+    // myGraph->addEdgeUnDir(1, 2);
+    // myGraph->addEdgeUnDir(2, 4);
+    // myGraph->addEdgeUnDir(2, 5);
+    // myGraph->addEdgeUnDir(2, 6);
+    // myGraph->addEdgeUnDir(3, 7);
+    // myGraph->addEdgeUnDir(3, 8);
     //End Graph Example #1
 
     //Graph Example #2
@@ -81,6 +81,18 @@ int main(int argc, const char * argv[]) {
 //    myGraph->addEdgeUnDir(6, 7);
     //End Graph Example #3
 
+    myGraph -> addVertex(0);
+    myGraph -> addVertex(1);
+    myGraph -> addVertex(2);
+    myGraph -> addVertex(3);
+    myGraph -> addVertex(4);
+
+    myGraph -> addEdgeUnDir(0,1);
+    myGraph -> addEdgeUnDir(0,2);
+    myGraph -> addEdgeUnDir(1,3);
+    myGraph -> addEdgeUnDir(2,3);
+    myGraph -> addEdgeUnDir(3,4);
+
     printGraph(myGraph);
 
     vector<GraphVertex*> aVertex;
@@ -103,6 +115,7 @@ int main(int argc, const char * argv[]) {
     aVertex.clear();
 
     delete myGraph;
+    
 
     std::cout << "Program ending, have a great day!" << endl;
     return 0;
@@ -119,3 +132,4 @@ void printGraph(Graph* theGraph) {
         else {}
     }//for
 }//printGraph
+\

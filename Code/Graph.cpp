@@ -93,7 +93,7 @@ void Graph::addEdgeDir(int source, int destination) {
 //Will do nothing if the range of the source or destination values are beyond the size of the
 //array, or, if the source or destination vertices have not yet been added, in other words, if
 //you try to create an edge for a vertex that does not yet exist, this function will do nothing
-void Graph::addEdgeUnDir(int source, int destination) {
+void Graph::addEdgeUnDir(int source, int destination, int weight) {
     //if the source or destination vertex values are grater than the size of the array of vectors
     //or if the soruce or destination vertecis do not exist, then return
     if (source >= STARTSIZE || source < 0 || destination >= STARTSIZE || destination < 0 ||
@@ -102,10 +102,13 @@ void Graph::addEdgeUnDir(int source, int destination) {
         return;
     }//if
     else {
+        edgeArray[source].first -> weight = weight;
         //Add to the source vector an existing vertex located at destination in the array
         edgeArray[source].second->push_back(edgeArray[destination].first);
         //Add to the destination vector an existing vertex located at source in the array
         edgeArray[destination].second->push_back(edgeArray[source].first);
+        //Add weight to the vertex edge will increacse ass time goes on
+
     }//else
 }//adEdge(int, int)
 
@@ -114,35 +117,35 @@ void Graph::addEdgeUnDir(int source, int destination) {
 //If you try to start with a vertex which does not exist, this function will return
 //an empty vector
 vector<GraphVertex*> Graph::searchDFS(int start) {
-    vector<GraphVertex*> returnVector;
-    stack <GraphVertex*> tempStack;
-    vector <GraphVertex*> *temp;
-    GraphVertex *ptr;
+    vector<GraphVertex*> returnVector; // using to store the values and then return them
+    stack <GraphVertex*> tempStack; // creating a stack of GraphVertex's
+    vector <GraphVertex*> *temp; //created a vector of GraphVertex's called temp
+    GraphVertex *ptr; // created a object called ptr to use to hold values
 
-    if(start > STARTSIZE || start < 0 || edgeArray[start].first == nullptr){
-        cout << "No Position at Pounter " << start << endl;
-        return returnVector;
-    }
+    if(start > STARTSIZE || start < 0 || edgeArray[start].first == nullptr){//test case to check if its in bounds
+        cout << "No Position at Pounter " << start << endl; //prints out message if out of bounds
+        return returnVector; //return the vector which is empty
+    }//if
     else{
-        clearAllVisited();
+        clearAllVisited(); //clears all the edges to false which means not visited
 
-        tempStack.push(edgeArray[start].first);
+        tempStack.push(edgeArray[start].first); // pushing the starting value on to the stack
 
-        while(!tempStack.empty()){
-            ptr = tempStack.top();
-            tempStack.pop();
-            if (!edgeArray[ptr->Value].first->Visited){
-                returnVector.push_back(edgeArray[ptr->Value].first);
-                edgeArray[ptr->Value].first->Visited = true;
-            }
-            temp = getDestVertex(ptr->Value);
-            for (int i = 0; i < temp->size(); i++) {
+        while(!tempStack.empty()){ // runs through the loop while its not empty
+            ptr = tempStack.top(); // making ptr = to the top value of the stack
+            tempStack.pop(); //popping off the value from the stack
+            if (!edgeArray[ptr->Value].first->Visited){//if not visited
+                returnVector.push_back(edgeArray[ptr->Value].first);//push onto the vector
+                edgeArray[ptr->Value].first->Visited = true; // mark the value true
+            }//if
+            temp = getDestVertex(ptr->Value); // making temp = the nodes of the starting point
+            for (int i = 0; i < temp->size(); i++) { // running through all the values and pushing them on the stack
                 if (!edgeArray[temp->at(i)->Value].first->Visited) {
                     tempStack.push(temp->at(i));
-                }
-            }
-        }
-    }
+                }//if
+            }//for
+        }//while
+    }//else
 
 
     return returnVector;
@@ -183,7 +186,7 @@ vector<GraphVertex*> Graph::searchBFS(int start) {
                 }
             }
         }
-    }  
+    }
     return returnVector;
 }//searchBFS
 
@@ -195,4 +198,43 @@ void Graph::clearAllVisited(void) {
         }//if
         else {}
     }//for
+
+void Graph:: djkstrasAlgo(int begin, int end){
+    vector<GraphVertex*> returnVector;
+    vector<GraphVertex*> *temp;
+    stack<GraphVertex*> orderOfSequence;
+    GraphVertex* ptr;
+    int total;
+
+    if(begin > STARTSIZE || begin < 0 && edgeArray[begin].second -> size() == NULL){
+          cout << "Sorry Pointer at " << begin << "Does Not Exist." << endl;
+    }
+    else{
+          orderOfSequence.push(arrayEdge[begin].first);
+
+          while(!orderOfSequence.empty()){
+              ptr = orderOfSequence.top();
+              orderOfSequence.pop();
+
+              temp = getDestVertex(ptr -> Value);
+              if(!edgeArray[ptr -> Value].first -> Visited != true){
+                  orderOfSequence.push(edgeArray[ptr -> Value].first);
+                  edgeArray[ptr -> Value].first -> Visited = true;
+                  total += edgeArray[ptr -> value].first -> weight;
+              }
+              for(int i = 0; i < temp -> size(); i++){
+                  if(temp -> at(i) -> Visited != true){
+                      orderOfSequence.push(edgeArray[temp -> at(i) -> Value].first);
+                      total += temp -> at(i) -> weight;
+                  }
+              }
+
+
+          }
+    }
+
+
+
+
+}
 }//clearAllVisited
